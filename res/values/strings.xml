@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">AlljoynSimulatorForAndroid</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="connection_service_name">ConnectionService</string>
+    <string name="data_loading">Loading..&#8230;</string>
+    <string name="array_select">Select</string>
+
+    <string-array name="array_if_type">
+        <item>ControlPanel</item>
+        <item>Container</item>
+        <item>Property</item>
+        <item>Action</item>
+        <item>Dialog</item>
+    </string-array>
+    <string-array name="array_if_signal">
+        <item>s</item>
+        <item>q</item>
+        <item>n</item>
+        <item>u</item>
+        <item>i</item>
+        <item>t</item>
+        <item>x</item>
+        <item>d</item>
+        <item>b</item>
+        <item>q(qqq)</item>
+    </string-array>
+    <string-array name="array_if_ui_type">
+        <item>Switch</item>
+        <item>CheckBox</item>
+        <item>Spinner</item>
+        <item>RadioButton</item>
+        <item>Slider</item>
+        <item>TimePicker</item>
+        <item>DatePicker</item>
+        <item>NumberPicker</item>
+        <item>NumericKeypad</item>
+        <item>RotaryKnob</item>
+        <item>TextLabel</item>
+        <item>NumericView</item>
+        <item>EditText</item>
+    </string-array>
+
+</resources>

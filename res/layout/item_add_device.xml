@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="39dp"
+        android:background="#ffffff" >
+
+        <Button
+            android:id="@+id/btn_onoff"
+            android:layout_width="45dp"
+            android:layout_height="wrap_content"
+            android:background="#d5d5d5"
+            android:text="OFF"
+            android:textColor="#bdbdbd"
+            android:textSize="14sp" 
+            android:visibility="gone"/>
+
+        <FrameLayout
+            android:id="@+id/fl_line_1"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/btn_onoff"
+            android:background="#a6a6a6" 
+            android:visibility="gone">
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="7dp"
+            android:layout_toLeftOf="@+id/ll_sub"
+            android:text="TextView" />
+
+        <LinearLayout
+            android:id="@+id/ll_sub"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+             >
+
+            <FrameLayout
+                android:id="@+id/fl_line_2"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="#a6a6a6"
+                 >
+            </FrameLayout>
+
+            <ImageButton
+                android:id="@+id/ib_delete"
+                android:layout_width="55dp"
+                android:layout_height="match_parent"
+                android:background="#d5d5d5"
+                android:src="@android:drawable/ic_menu_delete" />
+
+            <FrameLayout
+                android:id="@+id/fl_line_3"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="#a6a6a6" >
+            </FrameLayout>
+
+            <ImageButton
+                android:id="@+id/ib_modify"
+                android:layout_width="55dp"
+                android:layout_height="match_parent"
+                android:background="#d5d5d5"
+                android:src="@android:drawable/ic_menu_edit" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#a6a6a6" >
+    </LinearLayout>
+
+</LinearLayout>

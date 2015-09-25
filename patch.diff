@@ -1,0 +1,681 @@
+From 5c1e80e6240a008219afc8f255be2324337debfc Mon Sep 17 00:00:00 2001
+From: unknown <gpal.park@GNRHQ10-NE100EB.LGE.NET>
+Date: Mon, 21 Sep 2015 16:41:53 +0900
+Subject: [PATCH] -
+
+---
+ AndroidManifest.xml                                |   6 +
+ res/drawable-xxhdpi/file_add.png                   | Bin 0 -> 1725 bytes
+ res/drawable-xxhdpi/file_empty.png                 | Bin 0 -> 582 bytes
+ res/drawable-xxhdpi/folder.png                     | Bin 0 -> 193 bytes
+ res/drawable-xxhdpi/list_add.png                   | Bin 0 -> 2226 bytes
+ res/layout/activity_file.xml                       |  50 +++++
+ res/layout/activity_main.xml                       |  11 +-
+ res/layout/item_file.xml                           |  36 ++++
+ .../simulator/activity/FileExplorerActivity.java   | 210 +++++++++++++++++++++
+ .../alljoyn/simulator/activity/MainActivity.java   |  13 +-
+ src/com/lge/alljoyn/simulator/utils/ReadCVS.java   | 115 +++++++++++
+ 11 files changed, 437 insertions(+), 4 deletions(-)
+ create mode 100644 res/drawable-xxhdpi/file_add.png
+ create mode 100644 res/drawable-xxhdpi/file_empty.png
+ create mode 100644 res/drawable-xxhdpi/folder.png
+ create mode 100644 res/drawable-xxhdpi/list_add.png
+ create mode 100644 res/layout/activity_file.xml
+ create mode 100644 res/layout/item_file.xml
+ create mode 100644 src/com/lge/alljoyn/simulator/activity/FileExplorerActivity.java
+ create mode 100644 src/com/lge/alljoyn/simulator/utils/ReadCVS.java
+
+diff --git a/AndroidManifest.xml b/AndroidManifest.xml
+index e4c386a..cb9ffa4 100644
+--- a/AndroidManifest.xml
++++ b/AndroidManifest.xml
+@@ -51,6 +51,12 @@
+             android:theme="@android:style/Theme.Holo.Light.NoActionBar" 
+             android:label="@string/app_name" >
+         </activity>
++        
++        <activity
++            android:name=".activity.FileExplorerActivity"
++            android:theme="@android:style/Theme.Holo.Light.NoActionBar" 
++            android:label="@string/app_name" >
++        </activity>
+ 
+         <service
+             android:name="com.lge.alljoyn.simulator.service.BusConnectionService"
+diff --git a/res/drawable-xxhdpi/file_add.png b/res/drawable-xxhdpi/file_add.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..0ca56c23889f79ce15017f20f09d7d7b632882fe
+GIT binary patch
+literal 1725
+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
+TdIpL?00000NkvXXu0mjf)|e0b
+
+literal 0
+HcmV?d00001
+
+diff --git a/res/drawable-xxhdpi/file_empty.png b/res/drawable-xxhdpi/file_empty.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..ef39738f84e4f0ba0457cecea2de8e0fca25a3bb
+GIT binary patch
+literal 582
+zcmeAS@N?(olHy`uVBq!ia0vp^1|ZDA1|-9oezpTC#^NA%Cx&(BWL^R}Ea{HEjtmSN
+z`?>!lvI6Bkc)B=-WH`T_xzUT+QJ^iqUqsB#LGFN3YXVoR2wM(|H+OdYA@vQyH4O5H
+zE<FlbvYB(qg>!BJ8#aVo(3|x6{>}Lh)YR0L&*n6e=h^-H{hM=to*i;Lb4>H}CPNuM
+z?jzjKP9FHn-@$!^&HKOHo!7JLxmBkzzv2~mK4aa+-d7J6DaGur3E17g@LbrcM(=%g
+zX1=F96M8wW)Vt*vrxsT9J7`MkC@*-)xV-M2{KME~x^6p^phDCBzb@8n6L9yLD?d+M
+zL$x`TW!>wHUwRs%z8}_rl>~f>684Q}3-z&4>f8C(*hW3Ti|sVW6c(N97r&I=;JnZ2
+z(tUgLL&?S<qX@SJCQQ8fitBc~_5C7{o9EyDlWA$nh8_n^rcM9-Y+88?3!4+aoz`2z
+z2DZmbIN`NG@BMb2hdt5v537I-NK;HWwqJjdc+R=PmkTDA`#nEq8Gd-DupX-^^Mfs2
+zoEwe@7Ra#1SX7lfFuQd*Eh>N3`~&k7*tQrl-<rXgd#1rG%|Y6DL9gV6V>}tjD8jS<
+zr!LSr9q#vcf2EmaD0{7`MQ_y?m;DZlUmmh7Kk(FxiTSS0`R_aD{HWa9`Qork?<KFs
+zdv*p}5*LV1+33#Edta$+!VO0k`KfCA#9hQMulT8RdXxYCw29YlOC9C~rUeF1S3j3^
+HP6<r_$9?mu
+
+literal 0
+HcmV?d00001
+
+diff --git a/res/drawable-xxhdpi/folder.png b/res/drawable-xxhdpi/folder.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..1d6ce03ac891e43304544f053d95bd805c9a8926
+GIT binary patch
+literal 193
+zcmeAS@N?(olHy`uVBq!ia0vp^1|ZDA1|-9oezpTC#^NA%Cx&(BWL^R}Ea{HEjtmSN
+z`?>!lvI6<po-U3d8P0FdALKk>Ai(UXK6Ux$mIf<>PemI(Z;V$j^AvjhwxVdCelu^n
+zlF_wG{U-u~&6SjM_jd5i3FzGM@AS|9lIOCg8D=q>FlVq`;8`H)VBC<#a28d-%+BG~
+brfck<jJ(Bu#YCR~TFc<+>gTe~DWM4f-JU@h
+
+literal 0
+HcmV?d00001
+
+diff --git a/res/drawable-xxhdpi/list_add.png b/res/drawable-xxhdpi/list_add.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..c16f114018d8a5b7436f6791a4a3bb6e2075b7bd
+GIT binary patch
+literal 2226
+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
+AL;wH)
+
+literal 0
+HcmV?d00001
+
+diff --git a/res/layout/activity_file.xml b/res/layout/activity_file.xml
+new file mode 100644
+index 0000000..358de23
+--- /dev/null
++++ b/res/layout/activity_file.xml
+@@ -0,0 +1,50 @@
++<?xml version="1.0" encoding="utf-8"?>
++<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    android:orientation="vertical" >
++    
++    <RelativeLayout
++        android:id="@+id/rl_top"
++        android:layout_width="match_parent"
++        android:layout_height="44dp"
++        android:background="@android:color/darker_gray" >
++
++        <TextView
++            android:id="@+id/tv_title"
++            android:layout_width="wrap_content"
++            android:layout_height="match_parent"
++            android:layout_centerHorizontal="true"
++            android:gravity="center_vertical"
++            android:text="File Explorer" />
++
++        <ImageButton
++            android:id="@+id/ib_back"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:src="@android:drawable/ic_menu_revert" />
++    </RelativeLayout>
++
++    <TextView
++        android:id="@+id/tv_Path"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:background="#d5d5d5"
++        android:padding="5dp"
++        android:singleLine="true"
++        android:text="Path" />
++
++    <LinearLayout
++        android:layout_width="match_parent"
++        android:layout_height="1dp"
++        android:background="#a6a6a6" >
++    </LinearLayout>
++    
++    <ListView
++        android:id="@+id/lvFileControl"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:divider="@android:color/transparent" >
++    </ListView>
++
++</LinearLayout>
+\ No newline at end of file
+diff --git a/res/layout/activity_main.xml b/res/layout/activity_main.xml
+index a5cde75..979a07e 100644
+--- a/res/layout/activity_main.xml
++++ b/res/layout/activity_main.xml
+@@ -10,6 +10,12 @@
+         android:layout_height="44dp"
+         android:background="@android:color/darker_gray" >
+ 
++        <ImageButton
++            android:id="@+id/btn_file"
++            android:layout_width="wrap_content"
++            android:layout_height="match_parent"
++            android:src="@drawable/file_add" />
++
+         <TextView
+             android:id="@+id/tv_title"
+             android:layout_width="wrap_content"
+@@ -21,9 +27,10 @@
+         <ImageButton
+             android:id="@+id/btn_add"
+             android:layout_width="wrap_content"
+-            android:layout_height="wrap_content"
++            android:layout_height="match_parent"
+             android:layout_alignParentRight="true"
+-            android:src="@android:drawable/ic_menu_add" />
++            android:layout_centerVertical="true"
++            android:src="@drawable/list_add" />
+     </RelativeLayout>
+ 
+     <TextView
+diff --git a/res/layout/item_file.xml b/res/layout/item_file.xml
+new file mode 100644
+index 0000000..94dba73
+--- /dev/null
++++ b/res/layout/item_file.xml
+@@ -0,0 +1,36 @@
++<?xml version="1.0" encoding="utf-8"?>
++<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    android:layout_width="match_parent"
++    android:layout_height="40dp"
++    android:orientation="vertical" >
++
++    <RelativeLayout
++        android:layout_width="match_parent"
++        android:layout_height="39dp"
++        android:background="#ffffff" >
++
++        <ImageButton
++            android:id="@+id/btn_icon"
++            android:layout_width="45dp"
++            android:layout_height="match_parent"
++            android:background="#d5d5d5"
++            android:src="@drawable/folder" />
++
++        <TextView
++            android:id="@+id/tv_filename"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:layout_centerVertical="true"
++            android:layout_marginLeft="10dp"
++            android:layout_toRightOf="@+id/btn_icon"
++            android:text="TextView" />
++
++    </RelativeLayout>
++
++    <LinearLayout
++        android:layout_width="match_parent"
++        android:layout_height="1dp"
++        android:background="#a6a6a6" >
++    </LinearLayout>
++    
++</LinearLayout>
+\ No newline at end of file
+diff --git a/src/com/lge/alljoyn/simulator/activity/FileExplorerActivity.java b/src/com/lge/alljoyn/simulator/activity/FileExplorerActivity.java
+new file mode 100644
+index 0000000..501d104
+--- /dev/null
++++ b/src/com/lge/alljoyn/simulator/activity/FileExplorerActivity.java
+@@ -0,0 +1,210 @@
++package com.lge.alljoyn.simulator.activity;
++
++import java.io.File;
++import java.util.ArrayList;
++
++import com.lge.alljoyn.simulator.R;
++import com.lge.alljoyn.simulator.utils.ReadCVS;
++
++import android.app.Activity;
++import android.app.AlertDialog;
++import android.content.Context;
++import android.content.DialogInterface;
++import android.os.Bundle;
++import android.os.Environment;
++import android.util.Log;
++import android.view.LayoutInflater;
++import android.view.View;
++import android.view.ViewGroup;
++import android.widget.AdapterView;
++import android.widget.AdapterView.OnItemClickListener;
++import android.widget.ArrayAdapter;
++import android.widget.BaseAdapter;
++import android.widget.ImageButton;
++import android.widget.ListView;
++import android.widget.TextView;
++import android.widget.Toast;
++
++public class FileExplorerActivity extends Activity {
++	
++	private ImageButton ib_back;
++	
++	private String mFileName;
++	private ListView lvFileControl;
++	private FileAdapter mFileAdapter;
++	private Context mContext = this;
++	
++	private ArrayList<String> lItem = null;
++	private ArrayList<String> lPath = null;
++	private String mRoot = Environment.getExternalStorageDirectory().getAbsolutePath();
++	
++	private TextView tv_Path;
++
++	@Override
++	protected void onCreate(Bundle savedInstanceState) {
++		// TODO Auto-generated method stub
++		super.onCreate(savedInstanceState);
++		setContentView(R.layout.activity_file);
++		
++		ib_back = (ImageButton) findViewById(R.id.ib_back);
++		ib_back.setOnClickListener(new View.OnClickListener() {
++
++			@Override
++			public void onClick(View v) {
++				// TODO Auto-generated method stub
++				finish();
++			}
++		});
++		
++		tv_Path = (TextView) findViewById(R.id.tv_Path);
++		lvFileControl = (ListView)findViewById(R.id.lvFileControl);
++
++		getDir(mRoot);
++
++	}
++	
++	private void getDir(String dirPath)
++
++	{
++		tv_Path.setText("Location: " + dirPath);
++		lItem = new ArrayList<String>();
++		lPath = new ArrayList<String>();
++		
++
++		File f = new File(dirPath);
++		File[] files = f.listFiles();
++
++		if (!dirPath.equals(mRoot))
++		{
++			//item.add(root); //to root.
++			//path.add(root);
++
++			lItem.add("../"); //to parent folder
++			lPath.add(f.getParent());
++		}
++		for (int i = 0; i < files.length; i++)
++		{
++			File file = files[i];
++			lPath.add(file.getAbsolutePath());
++
++			if (file.isDirectory())
++				lItem.add(file.getName());
++			else
++				lItem.add(file.getName());
++		}
++		mFileAdapter = new FileAdapter(lItem);
++		lvFileControl.setAdapter(mFileAdapter);
++	}
++	
++	public class FileAdapter extends BaseAdapter {
++		private ArrayList<String> items;
++
++		LayoutInflater Inflater;
++		
++		public FileAdapter(ArrayList<String> file_list) {
++			this.items = file_list;
++			Inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
++		}
++		@Override
++		public int getCount() {
++			// TODO Auto-generated method stub
++			if (items == null)
++				return 0;
++			return items.size();
++		}
++
++		@Override
++		public Object getItem(int arg0) {
++			// TODO Auto-generated method stub
++			if (items == null)
++				return null;
++			return items.get(arg0);
++		}
++
++		@Override
++		public long getItemId(int arg0) {
++			// TODO Auto-generated method stub
++			return 0;
++		}
++
++		@Override
++		public View getView(final int position, View convertView, ViewGroup parent) {
++			// TODO Auto-generated method stub
++			if (convertView == null) {
++				convertView = Inflater.inflate(R.layout.item_file, null, true);
++			}
++			final File file = new File(lPath.get(position));
++			
++			TextView tv = (TextView) convertView.findViewById(R.id.tv_filename);
++			tv.setText(lItem.get(position));
++			
++			ImageButton btn_icon = (ImageButton) convertView.findViewById(R.id.btn_icon);
++			if (file.isDirectory()){
++				btn_icon.setImageResource(R.drawable.folder);
++			}else{
++				btn_icon.setImageResource(R.drawable.file_empty);
++			}
++			
++			convertView.setOnClickListener(new View.OnClickListener() {
++				
++				@Override
++				public void onClick(View v) {
++					// TODO Auto-generated method stub
++
++					/* 만약 디렉토리를 클릭한 거라면 */
++					if (file.isDirectory())
++					{
++						/* 디렉토리 클릭시 하위 디렉토리/파일들을 뷰로 구성해주어야 한다 */
++						if (file.canRead())
++							getDir(lPath.get(position));
++						else
++						{
++							Toast.makeText(mContext, "No files in this folder.", Toast.LENGTH_SHORT).show();
++						}
++					}
++					/* 만약 디렉토리가 아닌 파일을 클릭한 거라면 */
++					else
++					{
++						mFileName = file.getName();  // 파일이름
++						String ext = mFileName.substring(mFileName.lastIndexOf('.') + 1, mFileName.length()); //파일 확장자
++						if(ext.equalsIgnoreCase("csv")){
++
++							new AlertDialog.Builder(mContext)
++							.setTitle("알림")
++							.setMessage("[ " + mFileName + " ] 파일을 등록 하시겠습니까?")
++							.setPositiveButton("OK", 
++									new DialogInterface.OnClickListener() {
++								public void onClick(DialogInterface dialog, int which) {
++									// TODO Auto-generated method stub
++
++									ReadCVS obj = new ReadCVS();
++									obj.run(lPath.get(position).toString(), mFileName.substring(0, mFileName.lastIndexOf('.')), mContext);
++
++								}
++							})
++							.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
++
++								@Override
++								public void onClick(DialogInterface arg0, int arg1) {
++									// TODO Auto-generated method stub
++
++								}
++							}).show();
++						}else{
++							new AlertDialog.Builder(mContext).setTitle("알림").setMessage("파일을 확인해 주세요.")
++							.setPositiveButton("확인", null).show();
++						}
++
++
++						Log.e("test", "filename="+lPath.get(position).toString());
++					}
++				
++				}
++			});
++			
++			return convertView;
++		}
++		
++	}
++
++}
+diff --git a/src/com/lge/alljoyn/simulator/activity/MainActivity.java b/src/com/lge/alljoyn/simulator/activity/MainActivity.java
+index 04c944e..8e66db7 100644
+--- a/src/com/lge/alljoyn/simulator/activity/MainActivity.java
++++ b/src/com/lge/alljoyn/simulator/activity/MainActivity.java
+@@ -39,7 +39,7 @@ public class MainActivity extends CommonActivity {
+ 
+ 	private static int list_index = 0;
+ 
+-	private ImageButton btn_add;
++	private ImageButton btn_file, btn_add;
+ 	private ListView lv_device;
+ 	private DeviceAdapter mDeviceAdapter;
+ 	private AJDeviceDBAdapter dbAdapter;
+@@ -74,13 +74,22 @@ public class MainActivity extends CommonActivity {
+ 		serviceIntent = new Intent(this, BusConnectionService.class);
+ 
+ 		lv_device.setAdapter(mDeviceAdapter);
++		
++		btn_file = (ImageButton) findViewById(R.id.btn_file);
++		btn_file.setOnClickListener(new View.OnClickListener() {
++			
++			@Override
++			public void onClick(View arg0) {
++				Intent intent = new Intent(mContext, FileExplorerActivity.class);
++				startActivity(intent);
++			}
++		});
+ 
+ 		btn_add = (ImageButton) findViewById(R.id.btn_add);
+ 		btn_add.setOnClickListener(new View.OnClickListener() {
+ 
+ 			@Override
+ 			public void onClick(View arg0) {
+-				// TODO Auto-generated method stub
+ 				AddDialog();
+ 			}
+ 		});
+diff --git a/src/com/lge/alljoyn/simulator/utils/ReadCVS.java b/src/com/lge/alljoyn/simulator/utils/ReadCVS.java
+new file mode 100644
+index 0000000..93692f7
+--- /dev/null
++++ b/src/com/lge/alljoyn/simulator/utils/ReadCVS.java
+@@ -0,0 +1,115 @@
++package com.lge.alljoyn.simulator.utils;
++
++import java.io.BufferedReader;
++import java.io.FileNotFoundException;
++import java.io.FileReader;
++import java.io.IOException;
++
++import com.lge.alljoyn.simulator.about.DeviceAboutObject;
++import com.lge.alljoyn.simulator.about.InterfaceObject;
++import com.lge.alljoyn.simulator.about.InterfaceRangeObject;
++import com.lge.alljoyn.simulator.database.AJDeviceDBAdapter;
++
++import android.app.AlertDialog;
++import android.content.Context;
++import android.util.Log;
++
++public class ReadCVS {
++	
++	private Context mContext;
++	
++	String[] columns;
++	BufferedReader br = null;
++	String line = "";
++	String cvsSplitBy = ",";
++	private AJDeviceDBAdapter dbAdapter;
++	int i = 0;
++	private String deviceName;
++
++	public void run (String csvFile, String FileName, Context ctx) {
++		mContext = ctx;
++		deviceName = FileName;
++		
++		dbAdapter = new AJDeviceDBAdapter(ctx);
++		dbAdapter.open();
++		DeviceInsert();
++		try {
++			
++			
++			br = new BufferedReader(new FileReader(csvFile));
++			while ((line = br.readLine()) != null) {
++				i++;
++				if(i==1){
++					continue;
++				}
++				columns = line.split(cvsSplitBy);
++				
++				InterfaceInsert();
++			}
++
++		} catch (FileNotFoundException e) {
++			e.printStackTrace();
++		} catch (IOException e) {
++			e.printStackTrace();
++		} finally {
++			if (br != null) {
++				try {
++					br.close();
++				} catch (IOException e) {
++					e.printStackTrace();
++				}
++			}
++		}
++		
++		Log.i("ReadCVS","Done");
++		new AlertDialog.Builder(mContext).setTitle("알림").setMessage("등록이 완료되었습니다.")
++		.setPositiveButton("확인", null).show();
++		dbAdapter.close();
++	}
++	public void DeviceInsert(){
++		DeviceAboutObject d_obj = new DeviceAboutObject();
++		d_obj.setDeviceId(deviceName);
++		d_obj.setDeviceName(deviceName);
++		dbAdapter.insertDevice(d_obj);
++	}
++	
++	public void InterfaceInsert(){
++		InterfaceObject obj = new InterfaceObject();
++		try{
++			obj.setIf_name(columns[1]);
++			obj.setIf_path(columns[2]);
++			obj.setIf_type(columns[3]);
++			obj.setIf_signal(columns[4]);
++			obj.setIf_device_id(dbAdapter.getLastDeviceId());
++			obj.setIf_default_value(columns[6]);
++			obj.setIf_min_value(columns[7]);
++			obj.setIf_max_value(columns[8]);
++			obj.setIf_has_index(Integer.parseInt(columns[9]));
++			obj.setIf_description(columns[10]);
++			obj.setIf_unit(columns[11]);
++			obj.setIf_dialog_action1(columns[13]);
++			obj.setIf_dialog_action2(columns[14]);
++			obj.setIf_dialog_action3(columns[15]);
++			obj.setIf_noti_flag(Integer.parseInt(columns[16]));
++			obj.setIf_ui_type(Integer.parseInt(columns[17]));
++			obj.setIf_writable(Integer.parseInt(columns[18]));
++			obj.setIf_secured(Integer.parseInt(columns[19]));
++			obj.setIf_dialog_button1(columns[20]);
++			obj.setIf_dialog_button2(columns[21]);
++			obj.setIf_dialog_button3(columns[22]);
++			obj.setIf_dialog_msg(columns[23]);
++			
++			if(obj.getIf_has_index() == 1){
++				InterfaceRangeObject rangeObj = new InterfaceRangeObject();
++				rangeObj.setIf_id(dbAdapter.getLastInterfaceId());
++				
++				dbAdapter.insertInterfaceRange(rangeObj);
++			}
++		}
++		catch (ArrayIndexOutOfBoundsException e) {
++			e.printStackTrace();
++		}
++		dbAdapter.insertInterface(obj);
++	}
++
++}
+-- 
+2.2.1
+
